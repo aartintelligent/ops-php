@@ -34,6 +34,6 @@ php{{ env.version }}-zip
 RUN set -eux; \
 rm -rf /etc/apt/sources.list.d/*
 
-ENTRYPOINT ["/docker-debian-entrypoint"]
+ENTRYPOINT ["/docker-php-entrypoint"]
 
 USER debian

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-bash docker-php-entrypoint "$@"
+bash docker-debian-entrypoint "$@"
 
 exec "$@"
