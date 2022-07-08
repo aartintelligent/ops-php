@@ -56,7 +56,7 @@ for version; do
 
 		export suite variant
 
-		from="$DOCKER_REPOSITORY/ops-linux-debian:$suite-$DOCKER_TAG_VERSION"
+		from="$DOCKER_REPOSITORY/ops-linux:$suite-$DOCKER_TAG_VERSION"
 
 		export from
 
