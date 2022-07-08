@@ -1,0 +1,55 @@
+#!/bin/bash
+set -e
+
+: "${DOCKER_REPOSITORY:=aartintelligent}"
+: "${DOCKER_TAG_VERSION:=1.0.0}"
+
+[ -f versions.json ]
+
+jqt='jq-template'
+
+if [ "$#" -eq 0 ]; then
+
+	versions="$(jq -r 'keys | map(@sh) | join(" ")' versions.json)"
+
+	eval "set -- $versions"
+
+fi
+
+for version; do
+
+	export version
+
+	rm -rf "$version"
+
+	if jq -e '.[env.version] | not' versions.json > /dev/null; then
+
+		echo "deleting $version ..."
+
+		continue
+
+	fi
+
+	variants="$(jq -r '.[env.version].variants | map(@sh) | join(" ")' versions.json)"
+
+	eval "variants=( $variants )"
+
+	for dir in "${variants[@]}"; do
+
+		suite="$(dirname "$dir")"
+
+		variant="$(basename "$dir")"
+
+		export suite variant
+
+		from="$version:$suite-slim"
+
+		export from
+
+		echo "processing build image/$version/$dir ..."
+
+		docker build "image/$version/$dir" -t "$DOCKER_REPOSITORY/ops-php:$version-$suite-$variant-$DOCKER_TAG_VERSION"
+
+	done
+
+done

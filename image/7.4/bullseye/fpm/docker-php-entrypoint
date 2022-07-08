@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+bash docker-php-entrypoint "$@"
+
+exec "$@"

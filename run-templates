@@ -1,0 +1,80 @@
+#!/bin/bash
+set -e
+
+: "${DOCKER_REPOSITORY:=aartintelligent}"
+: "${DOCKER_TAG_VERSION:=1.0.0}"
+
+[ -f versions.json ]
+
+generated_warning() {
+	cat <<-EOH
+#
+# AARTINTELLIGENT
+#
+# OPS PHP
+#
+# PLEASE DO NOT EDIT IT DIRECTLY.
+#
+# @see https://github.com/aartintelligent/ops-linux
+#
+	EOH
+}
+
+jqt='jq-template'
+
+if [ "$#" -eq 0 ]; then
+
+	versions="$(jq -r 'keys | map(@sh) | join(" ")' versions.json)"
+
+	eval "set -- $versions"
+
+fi
+
+for version; do
+
+	export version
+
+	rm -rf "image/$version"
+
+	if jq -e '.[env.version] | not' versions.json > /dev/null; then
+
+		echo "deleting image/$version ..."
+
+		continue
+
+	fi
+
+	variants="$(jq -r '.[env.version].variants | map(@sh) | join(" ")' versions.json)"
+
+	eval "variants=( $variants )"
+
+	for dir in "${variants[@]}"; do
+
+		suite="$(dirname "$dir")"
+
+		variant="$(basename "$dir")"
+
+		export suite variant
+
+		from="$DOCKER_REPOSITORY/ops-linux-debian:$suite-slim-$DOCKER_TAG_VERSION"
+
+		export from
+
+		echo "processing template image/$version/$dir ..."
+
+		mkdir -p "image/$version/$dir"
+
+		{
+			generated_warning
+
+			gawk -f "$jqt" "template/Dockerfile-$variant.template"
+
+		} > "image/$version/$dir/Dockerfile"
+
+    cp -a "entrypoint/docker-php-entrypoint" "image/$version/$dir/docker-php-entrypoint"
+
+    cp -a "$jqt" "image/$version/$dir/$jqt"
+
+	done
+
+done
