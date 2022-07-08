@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+bash docker-debian-entrypoint "$@"
+
+exec "$@"

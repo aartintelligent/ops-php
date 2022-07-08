@@ -7,7 +7,7 @@
 #
 # @see https://github.com/aartintelligent/ops-linux
 #
-FROM aartintelligent/ops-linux-debian:bullseye-slim-1.0.0
+FROM aartintelligent/ops-linux:debian-bullseye-slim-1.0.0
 
 USER root
 
@@ -44,6 +44,6 @@ php8.1-zip
 RUN set -eux; \
 rm -rf /etc/apt/sources.list.d/*
 
-ENTRYPOINT ["/docker-debian-entrypoint"]
+ENTRYPOINT ["/docker-php-entrypoint"]
 
 USER debian
