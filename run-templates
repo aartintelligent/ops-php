@@ -56,7 +56,7 @@ for version; do
 
 		export suite variant
 
-		from="$DOCKER_REPOSITORY/ops-linux-debian:$suite-slim-$DOCKER_TAG_VERSION"
+		from="$DOCKER_REPOSITORY/ops-linux-debian:$suite-$DOCKER_TAG_VERSION"
 
 		export from
 
@@ -72,8 +72,6 @@ for version; do
 		} > "image/$version/$dir/Dockerfile"
 
     cp -a "entrypoint/docker-php-entrypoint" "image/$version/$dir/docker-php-entrypoint"
-
-    cp -a "$jqt" "image/$version/$dir/$jqt"
 
 	done
 

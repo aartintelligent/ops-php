@@ -1,28 +1,8 @@
 {
-  "7.4": {
-    "variants": [
-      "bullseye/cli",
-      "bullseye/fpm",
-      "buster/cli",
-      "buster/fpm"
-    ],
-    "version": "7.4"
-  },
-  "8.0": {
-    "variants": [
-      "bullseye/cli",
-      "bullseye/fpm",
-      "buster/cli",
-      "buster/fpm"
-    ],
-    "version": "8.0"
-  },
   "8.1": {
     "variants": [
-      "bullseye/cli",
-      "bullseye/fpm",
-      "buster/cli",
-      "buster/fpm"
+      "bullseye-slim/cli",
+      "bullseye-slim/fpm"
     ],
     "version": "8.1"
   }
