@@ -37,13 +37,13 @@ COPY nginx /etc/nginx
 COPY public /var/www/public
 
 RUN set -eux; \
-	{ \
-		echo '[global]'; \
-		echo 'daemonize = no'; \
-		echo; \
-		echo '[www]'; \
-		echo 'listen = /run/php-fpm.sock'; \
-	} | tee /usr/local/etc/php-fpm.d/zz-docker.conf; \
+    { \
+        echo '[global]'; \
+        echo 'daemonize = no'; \
+        echo; \
+        echo '[www]'; \
+        echo 'listen = /run/php-fpm.sock'; \
+    } | tee /usr/local/etc/php-fpm.d/zz-docker.conf; \
     sed -i 's/user = www-data/;user = www-data/g' /usr/local/etc/php-fpm.d/docker.conf; \
     sed -i 's/user = www-data/;user = www-data/g' /usr/local/etc/php-fpm.d/www.conf; \
     sed -i 's/group = www-data/;group = www-data/g' /usr/local/etc/php-fpm.d/docker.conf; \
