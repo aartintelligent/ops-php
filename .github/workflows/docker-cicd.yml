@@ -2,7 +2,7 @@ name: Docker CI/CD
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "0 1 * * 1"
 
 jobs:
 
