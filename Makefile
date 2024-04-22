@@ -2,7 +2,7 @@ REGISTRY = docker.io
 ORGANIZATION = aartintelligent
 PHP_TARGET = php
 PHP_VERSIONS ?= 8.2 8.3
-PHP_VARIANTS ?= base composer fpm nginx supervisor
+PHP_VARIANTS ?= base composer fpm nginx supervisor cron
 IMAGE = $(REGISTRY)/$(ORGANIZATION)/$(PHP_TARGET)
 
 build:
