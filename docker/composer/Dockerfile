@@ -16,11 +16,11 @@ RUN set -eux; \
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY system /
 
-RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN chmod +x /d-*.sh
 
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

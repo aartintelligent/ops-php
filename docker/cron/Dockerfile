@@ -9,18 +9,24 @@ RUN set -eux; \
     && apt-get install -y --no-install-recommends \
       cron
 
-COPY cron.d/crontab /etc/cron.d/crontab
+COPY system /
 
 RUN chmod 0644 /etc/cron.d/crontab
 
-RUN crontab /etc/cron.d/crontab
+RUN crontab -u rootless /etc/cron.d/crontab
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod gu+s /usr/sbin/cron
 
-RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN echo "/d-entrypoint-cron.sh" | tee -a "/d-entrypoint.listing"
 
-ENTRYPOINT ["docker-entrypoint"]
+RUN chmod +x /d-*.sh
+
+ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
 
-CMD ["cron", "-f"]
+STOPSIGNAL SIGQUIT
+
+CMD ["supervisord"]
+
+USER rootless

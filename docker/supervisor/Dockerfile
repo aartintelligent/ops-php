@@ -4,26 +4,9 @@ FROM aartintelligent/php:${PHP_VERSION}-base
 
 USER root
 
-RUN set -eux; \
-    apt-get update \
-    && apt-get install -y --no-install-recommends \
-      supervisor
+COPY system /
 
-RUN set -eux; \
-    mkdir -p \
-        /etc/supervisor; \
-    chmod 777 -R \
-        /etc/supervisor; \
-    chown rootless:rootless -R \
-        /etc/supervisor
-
-COPY supervisor /etc/supervisor
-
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

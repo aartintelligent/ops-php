@@ -18,7 +18,7 @@ RUN set -eux; \
 RUN set -eux; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-      iputils-ping unzip curl
+      iputils-ping unzip curl supervisor
 
 COPY --from=mlocati/php-extension-installer:latest /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
 
@@ -33,8 +33,10 @@ RUN set -eux; \
     touch /etc/environment; \
     mkdir -p \
         /usr/local/etc/php \
-        /usr/local/etc/php-fpm.d \
+        /usr/local/etc/php-fpm.d \ \
+        /etc/supervisor \
         /var/www \
+        /var/www/public \
         /var/run \
         /var/run/lock \
         /var/lib/php \
@@ -44,7 +46,9 @@ RUN set -eux; \
         /usr/local/etc/php \
         /usr/local/etc/php-fpm.d \
         /etc/environment \
+        /etc/supervisor \
         /var/www \
+        /var/www/public \
         /var/run \
         /var/run/lock \
         /var/lib/php \
@@ -53,22 +57,26 @@ RUN set -eux; \
     chown rootless:rootless -R \
         /usr/local/etc/php \
         /usr/local/etc/php-fpm.d \
+        /etc/supervisor \
         /etc/environment \
         /var/www \
+        /var/www/public \
         /var/run \
         /var/run/lock \
         /var/lib/php \
         /var/cache \
         /var/log
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY system /
 
-RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN chmod +x /d-*.sh
 
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
 
-CMD ["php-fpm"]
+STOPSIGNAL SIGQUIT
+
+CMD ["supervisord"]
 
 USER rootless

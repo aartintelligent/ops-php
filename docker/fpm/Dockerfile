@@ -4,6 +4,8 @@ FROM aartintelligent/php:${PHP_VERSION}-base
 
 USER root
 
+COPY system /
+
 RUN set -eux; \
     { \
         echo '[global]'; \
@@ -17,14 +19,14 @@ RUN set -eux; \
     sed -i 's/group = www-data/;group = www-data/g' /usr/local/etc/php-fpm.d/docker.conf; \
     sed -i 's/group = www-data/;group = www-data/g' /usr/local/etc/php-fpm.d/www.conf
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
 
-CMD ["php-fpm"]
+EXPOSE 9000
+
+STOPSIGNAL SIGQUIT
+
+CMD ["supervisord"]
 
 USER rootless

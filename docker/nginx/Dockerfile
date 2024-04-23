@@ -7,34 +7,20 @@ USER root
 RUN set -eux; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-      supervisor \
       nginx
 
 RUN set -eux; \
     mkdir -p \
-        /var/www/public \
-        /etc/supervisor \
-        /etc/nginx \
-        /var/lib/supervisor \
-        /var/lib/nginx; \
+        /var/lib/nginx \
+        /etc/nginx; \
     chmod 777 -R \
-        /var/www/public \
-        /etc/supervisor \
-        /etc/nginx \
-        /var/lib/supervisor \
-        /var/lib/nginx; \
+        /var/lib/nginx \
+        /etc/nginx; \
     chown rootless:rootless -R \
-        /var/www/public \
-        /etc/supervisor \
-        /etc/nginx \
-        /var/lib/supervisor \
-        /var/lib/nginx
+        /var/lib/nginx \
+        /etc/nginx
 
-COPY supervisor /etc/supervisor
-
-COPY nginx /etc/nginx
-
-COPY public /var/www/public
+COPY system /
 
 RUN set -eux; \
     { \
@@ -49,11 +35,7 @@ RUN set -eux; \
     sed -i 's/group = www-data/;group = www-data/g' /usr/local/etc/php-fpm.d/docker.conf; \
     sed -i 's/group = www-data/;group = www-data/g' /usr/local/etc/php-fpm.d/www.conf
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
 
