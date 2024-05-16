@@ -12,7 +12,7 @@ COMPOSER_ALLOW_XDEBUG="0"
 RUN set -eux; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-      tini
+      git tini
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
