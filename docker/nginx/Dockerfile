@@ -9,18 +9,21 @@ RUN set -eux; \
     && apt-get install -y --no-install-recommends \
       nginx
 
+COPY system /
+
 RUN set -eux; \
     mkdir -p \
+        /var/www \
         /var/lib/nginx \
         /etc/nginx; \
     chmod 777 -R \
+        /var/www \
         /var/lib/nginx \
         /etc/nginx; \
     chown rootless:rootless -R \
+        /var/www \
         /var/lib/nginx \
         /etc/nginx
-
-COPY system /
 
 ENTRYPOINT ["/d-entrypoint.sh"]
 

@@ -90,6 +90,8 @@ RUN set -eux; \
         pgsql pdo pdo_pgsql pdo_mysql pdo_sqlite amqp \
         redis
 
+COPY system /
+
 RUN set -eux; \
     touch /etc/environment; \
     mkdir -p \
@@ -127,8 +129,6 @@ RUN set -eux; \
         /var/lib/php \
         /var/cache \
         /var/log
-
-COPY system /
 
 RUN chmod +x /d-*.sh
 

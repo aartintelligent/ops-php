@@ -6,6 +6,14 @@ USER root
 
 COPY system /
 
+RUN set -eux; \
+    mkdir -p \
+        /var/www; \
+    chmod 777 -R \
+        /var/www; \
+    chown rootless:rootless -R \
+        /var/www
+
 ENTRYPOINT ["/d-entrypoint.sh"]
 
 WORKDIR /var/www
