@@ -17,11 +17,9 @@ RUN crontab -u rootless /etc/cron.d/crontab
 
 RUN chmod gu+s /usr/sbin/cron
 
-RUN echo "/d-entrypoint-cron.sh" | tee -a "/d-entrypoint.listing"
-
 RUN chmod +x /d-*.sh
 
-ENTRYPOINT ["/d-entrypoint.sh"]
+ENTRYPOINT ["/d-entrypoint-cron.sh"]
 
 WORKDIR /var/www
 
