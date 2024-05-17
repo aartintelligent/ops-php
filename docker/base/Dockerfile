@@ -96,7 +96,7 @@ RUN set -eux; \
     touch /etc/environment; \
     mkdir -p \
         /usr/local/etc/php \
-        /usr/local/etc/php-fpm.d \ \
+        /usr/local/etc/php-fpm.d \
         /etc/supervisor \
         /var/www \
         /var/www/public \
