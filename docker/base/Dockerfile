@@ -88,7 +88,7 @@ RUN set -eux; \
     install-php-extensions \
         apcu opcache xdebug gd intl tokenizer xml xsl zip \
         pgsql pdo pdo_pgsql pdo_mysql pdo_sqlite amqp \
-        redis
+        redis memcached
 
 COPY system /
 
