@@ -82,13 +82,16 @@ RUN set -eux; \
     && apt-get install -y --no-install-recommends \
       iputils-ping unzip curl supervisor
 
-COPY --from=mlocati/php-extension-installer:latest /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
+COPY --from=mlocati/php-extension-installer:latest \
+    /usr/bin/install-php-extensions \
+    /usr/local/bin/install-php-extensions
 
 RUN set -eux; \
     install-php-extensions \
         apcu opcache xdebug gd intl tokenizer xml xsl zip \
-        pgsql pdo pdo_pgsql pdo_mysql pdo_sqlite amqp \
-        redis memcached
+        pgsql pdo pdo_pgsql pdo_mysql pdo_sqlite \
+        redis memcached \
+        amqp
 
 COPY system /
 
