@@ -25,7 +25,7 @@ RUN set -eux; \
         /var/lib/nginx \
         /etc/nginx
 
-ENTRYPOINT ["/d-entrypoint.sh"]
+ENTRYPOINT ["/docker/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

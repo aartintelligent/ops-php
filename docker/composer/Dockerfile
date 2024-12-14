@@ -18,9 +18,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 COPY system /
 
-RUN chmod +x /d-*.sh
+RUN chmod +x /docker/d-*.sh
 
-ENTRYPOINT ["/d-entrypoint.sh"]
+ENTRYPOINT ["/docker/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

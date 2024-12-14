@@ -14,7 +14,7 @@ RUN set -eux; \
     chown rootless:rootless -R \
         /var/www
 
-ENTRYPOINT ["/d-entrypoint.sh"]
+ENTRYPOINT ["/docker/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

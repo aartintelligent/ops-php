@@ -133,9 +133,9 @@ RUN set -eux; \
         /var/cache \
         /var/log
 
-RUN chmod +x /d-*.sh
+RUN chmod +x /docker/d-*.sh
 
-ENTRYPOINT ["/d-entrypoint.sh"]
+ENTRYPOINT ["/docker/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

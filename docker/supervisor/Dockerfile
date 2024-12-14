@@ -6,7 +6,7 @@ USER root
 
 COPY system /
 
-ENTRYPOINT ["/d-entrypoint.sh"]
+ENTRYPOINT ["/docker/d-entrypoint.sh"]
 
 WORKDIR /var/www
 

@@ -27,11 +27,11 @@ if [ ! -f "$PHP_INI_DIR/conf.d/zz-php.ini" ]; then
         | sed -e 's/FPM_/''/g' \
         | sed -e 's/__/'.'/g' \
         | awk '{print tolower($0)}')
+
     VALUE=$(printenv "$e")
+
     echo "$VARIABLE = '$VALUE'" >> "/usr/local/etc/php-fpm.d/zz-docker.conf"
 
   done
 
 fi
-
-exec "$@"

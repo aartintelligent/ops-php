@@ -17,9 +17,11 @@ RUN crontab -u rootless /etc/cron.d/crontab
 
 RUN chmod gu+s /usr/sbin/cron
 
-RUN chmod +x /d-*.sh
+RUN chmod +x /docker/d-*.sh
 
-ENTRYPOINT ["/d-entrypoint-cron.sh"]
+RUN echo "/docker/d-bootstrap-cron.sh" >> /docker/d-bootstrap.list
+
+ENTRYPOINT ["/docker/d-entrypoint.sh"]
 
 WORKDIR /var/www
 
