@@ -35,3 +35,5 @@ if [ ! -f "$PHP_INI_DIR/conf.d/zz-php.ini" ]; then
   done
 
 fi
+
+(>&2 echo "[#] Bootstrap PHP successfully")
